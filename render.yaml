@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: social-media-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: NEO4J_URI
+        value: neo4j+s://a616c3d7.databases.neo4j.io
+      - key: NEO4J_USER
+        value: a616c3d7
+      - key: NEO4J_PASSWORD
+        value: YK8MxjSmRVELhUxf7a8KRVw_g_NTRiQGbWQMUr1Bsi0
