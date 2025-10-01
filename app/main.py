@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.config import config  # <-- make sure this is imported first
 from neomodel import db
 from neo4j.exceptions import AuthError, ServiceUnavailable
-from app.routers import person, users, posts, comments, groups
+from app.routers import users, posts, comments, groups
 from datetime import datetime
 
 app = FastAPI(
@@ -12,7 +12,6 @@ app = FastAPI(
 )
 
 # Include all routers
-app.include_router(person.router)  # Keep existing router
 app.include_router(users.router)
 app.include_router(posts.router)
 app.include_router(comments.router)
