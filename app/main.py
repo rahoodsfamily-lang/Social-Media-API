@@ -50,15 +50,20 @@ async def health_check():
 
 @app.on_event("startup")
 def startup_db_check():
+    """
+    Non-blocking database connection check.
+    Logs warnings but doesn't prevent app startup.
+    """
     try:
         db.cypher_query("RETURN 1")
         print("[✅] Neo4j connection successful!")
-    except AuthError:
-        print("[❌] Authentication failed: Check username/password.")
-        raise
-    except ServiceUnavailable:
-        print("[❌] Cannot connect: Is Neo4j running?")
-        raise
+    except AuthError as e:
+        print(f"[⚠️] Authentication failed: Check username/password. Error: {e}")
+        print("[⚠️] Application will start but database operations will fail.")
+    except ServiceUnavailable as e:
+        print(f"[⚠️] Cannot connect to Neo4j: Is Neo4j running? Error: {e}")
+        print("[⚠️] Application will start but database operations will fail.")
     except Exception as e:
-        print(f"[❌] Neo4j connection failed: {e}")
-        raise
+        print(f"[⚠️] Neo4j connection check failed: {e}")
+        print("[⚠️] Application will start but database operations may fail.")
+        print("[ℹ️] The app will retry connections on each request.")

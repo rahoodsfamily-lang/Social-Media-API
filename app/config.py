@@ -41,4 +41,7 @@ print("[ℹ️] Connecting to Neo4j...")
 if "localhost" in config.DATABASE_URL:
     print(f"[ℹ️] Local Neo4j connection: {config.DATABASE_URL}")
 else:
-    print("[ℹ️] Production Neo4j connection established")
+    # Show connection details without password for debugging
+    protocol = config.DATABASE_URL.split("://")[0] if "://" in config.DATABASE_URL else "unknown"
+    host_part = config.DATABASE_URL.split("@")[-1] if "@" in config.DATABASE_URL else "unknown"
+    print(f"[ℹ️] Production Neo4j connection: {protocol}://*****@{host_part}")
