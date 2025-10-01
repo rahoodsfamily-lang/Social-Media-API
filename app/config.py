@@ -29,6 +29,10 @@ else:
         config.DATABASE_URL = NEO4J_URI.replace("bolt://", f"bolt://{NEO4J_USER}:{encoded_password}@")
     elif NEO4J_URI.startswith("neo4j://"):
         config.DATABASE_URL = NEO4J_URI.replace("neo4j://", f"neo4j://{NEO4J_USER}:{encoded_password}@")
+    elif NEO4J_URI.startswith("neo4j+s://"):
+        config.DATABASE_URL = NEO4J_URI.replace("neo4j+s://", f"neo4j+s://{NEO4J_USER}:{encoded_password}@")
+    elif NEO4J_URI.startswith("neo4j+ssc://"):
+        config.DATABASE_URL = NEO4J_URI.replace("neo4j+ssc://", f"neo4j+ssc://{NEO4J_USER}:{encoded_password}@")
     else:
         config.DATABASE_URL = f"bolt://{NEO4J_USER}:{encoded_password}@{NEO4J_URI}"
 
